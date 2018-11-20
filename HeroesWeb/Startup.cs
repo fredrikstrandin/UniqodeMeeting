@@ -49,10 +49,10 @@ namespace HeroesWeb
             services.AddAuthentication("bearer")
                     .AddIdentityServerAuthentication("bearer", options =>
                     {
-                        options.Authority = "http://localhost:5000";
+                        options.Authority = "https://localhost:5000";
                         options.RequireHttpsMetadata = false;
 
-                        options.ApiName = "http://localhost:5000/resources";
+                        options.ApiName = "https://localhost:5000/resources";
                         //options.ApiSecret = "secret";
                         
                         options.JwtBearerEvents = new JwtBearerEvents
@@ -104,7 +104,7 @@ namespace HeroesWeb
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             
             app.UseAuthentication();
             

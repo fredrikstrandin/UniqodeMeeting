@@ -33,7 +33,7 @@ namespace HeroesWeb.Controllers
 
         private async Task<HttpResponseMessage> ApiCallUsingClientCredentials()
         {
-            var tokenClient = new TokenClient("http://localhost:5000/connect/token", "mvc", "secret");
+            var tokenClient = new TokenClient("https://localhost:5000/connect/token", "mvc", "secret");
             var tokenResponse = await tokenClient.RequestClientCredentialsAsync("apiApp");
 
             var client = new HttpClient();

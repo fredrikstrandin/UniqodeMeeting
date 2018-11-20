@@ -69,11 +69,11 @@ namespace QuickstartIdentityServer
                     AllowAccessTokensViaBrowser = true,
                     
                     RedirectUris = {
-                        "http://localhost:5002/callback",
-                        "http://localhost:5002/signin-oidc"
+                        "https://localhost:5002/callback",
+                        "https://localhost:5002/signin-oidc"
                     },
-                    PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
-                    AllowedCorsOrigins = { "http://localhost:5002" },
+                    PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
+                    AllowedCorsOrigins = { "https://localhost:5002" },
                     
                     AllowedScopes =
                     {

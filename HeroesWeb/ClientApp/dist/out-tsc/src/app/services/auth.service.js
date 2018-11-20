@@ -14,13 +14,13 @@ import { UserManager } from 'oidc-client';
 import { GlobalEventsManager } from './global.events.manager';
 import { map } from 'rxjs/operators';
 var settings = {
-    authority: 'http://localhost:5000',
+    authority: 'https://localhost:5000',
     client_id: 'mvc',
-    redirect_uri: 'http://localhost:5002/callback',
-    post_logout_redirect_uri: 'http://localhost:5002/signout-callback-oidc',
+    redirect_uri: 'https://localhost:5002/callback',
+    post_logout_redirect_uri: 'https://localhost:5002/signout-callback-oidc',
     response_type: 'id_token token',
     scope: 'openid profile',
-    silent_redirect_uri: 'http://localhost:5002/silent-renew.html',
+    silent_redirect_uri: 'https://localhost:5002/silent-renew.html',
     automaticSilentRenew: true,
     accessTokenExpiringNotificationTime: 4,
     // silentRequestTimeout:10000,
