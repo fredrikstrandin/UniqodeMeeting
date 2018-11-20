@@ -28,7 +28,7 @@ namespace HeroesWeb.Controllers
             var client = new HttpClient();
             client.SetBearerToken(accessToken);
 
-            return await client.GetAsync("http://localhost:5001/api/identity");
+            return await client.GetAsync("https://localhost:5001/api/identity");
         }
 
         private async Task<HttpResponseMessage> ApiCallUsingClientCredentials()
@@ -39,7 +39,7 @@ namespace HeroesWeb.Controllers
             var client = new HttpClient();
             client.SetBearerToken(tokenResponse.AccessToken);
 
-            return await client.GetAsync("http://localhost:5001/api/identity");
+            return await client.GetAsync("https://localhost:5001/api/identity");
         }
 
         public async Task Logout()

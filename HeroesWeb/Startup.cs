@@ -1,24 +1,31 @@
-using HeroesWeb.Repositorys;
+﻿using HeroesWeb.Repositorys;
 using HeroesWeb.Services;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace HeroesWeb
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger<Startup> _logger;
+
+        public Startup(ILogger<Startup> logger, IConfiguration configuration)
         {
+            _logger = logger;
             Configuration = configuration;
         }
 
@@ -30,44 +37,53 @@ namespace HeroesWeb
             services.AddScoped<IHeroService, HeroService>();
             services.AddScoped<IHeroRepository, HeroRepository>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = "oidc";
-            })
-                .AddCookie(options =>
+            services.AddMvcCore() //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .AddJsonFormatters()
+                .AddAuthorization(auth =>
                 {
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                    options.Cookie.Name = "mvcimplicit";
-                })
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.Authority = "https://localhost:5000";
-                    
-                    options.SignInScheme = "Cookies";
-                    options.RequireHttpsMetadata = false;
-                    options.ResponseType = "code id_token";
-
-                    options.ClientId = "mvc";
-
-                    options.Scope.Clear();
-                    options.Scope.Add("apiApp");
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-
-                    options.SaveTokens = true;
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        NameClaimType = JwtClaimTypes.Name,
-                        RoleClaimType = JwtClaimTypes.Role,
-                    };
+                    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+                        .RequireAuthenticatedUser().Build());
                 });
-        
-        // In production, the Angular files will be served from this directory
-        services.AddSpaStaticFiles(configuration =>
+
+            services.AddAuthentication("bearer")
+                    .AddIdentityServerAuthentication("bearer", options =>
+                    {
+                        options.Authority = "http://localhost:5000";
+                        options.RequireHttpsMetadata = false;
+
+                        options.ApiName = "http://localhost:5000/resources";
+                        //options.ApiSecret = "secret";
+                        
+                        options.JwtBearerEvents = new JwtBearerEvents
+                        {
+                            OnMessageReceived = e =>
+                            {
+                                _logger.LogTrace("JWT: message received");
+                                return Task.CompletedTask;
+                            },
+
+                            OnTokenValidated = e =>
+                            {
+                                _logger.LogTrace("JWT: token validated");
+                                return Task.CompletedTask;
+                            },
+
+                            OnAuthenticationFailed = e =>
+                            {
+                                _logger.LogTrace("JWT: authentication failed");
+                                return Task.CompletedTask;
+                            },
+
+                            OnChallenge = e =>
+                            {
+                                _logger.LogTrace("JWT: challenge");
+                                return Task.CompletedTask;
+                            }
+                        };
+                    });
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
@@ -88,8 +104,8 @@ namespace HeroesWeb
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-
+            //app.UseHttpsRedirection();
+            
             app.UseAuthentication();
             
             app.UseStaticFiles();

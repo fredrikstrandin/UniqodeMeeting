@@ -7,14 +7,14 @@ import { GlobalEventsManager } from './global.events.manager';
 import { map } from 'rxjs/operators';
 
 const settings: any = {
-    authority: 'httpS://localhost:5000',
+    authority: 'http://localhost:5000',
     client_id: 'mvc',
-    redirect_uri: 'https://localhost:5002/callback',
-    post_logout_redirect_uri: 'https://localhost:5002/signout-callback-oidc',
+    redirect_uri: 'http://localhost:5002/callback',
+    post_logout_redirect_uri: 'http://localhost:5002/signout-callback-oidc',
     response_type: 'id_token token',
     scope: 'openid profile',
 
-    silent_redirect_uri: 'https://localhost:5002/silent-renew.html',
+    silent_redirect_uri: 'http://localhost:5002/silent-renew.html',
     automaticSilentRenew: true,
     accessTokenExpiringNotificationTime: 4,
     // silentRequestTimeout:10000,
@@ -199,7 +199,9 @@ export class AuthService {
 
   private _setAuthHeaders(user: User) {
       this._authHeaders = new Headers();
-      this._authHeaders.append('Authorization', user.token_type + " " + user.access_token);
+      if(this._currentUser != undefined) {
+        this._authHeaders.append('Authorization', this._currentUser.token_type + " " + this._currentUser.access_token);
+      }
       this._authHeaders.append('Content-Type', 'application/json');
   }
   private _setRequestOptions(options?: RequestOptions) {

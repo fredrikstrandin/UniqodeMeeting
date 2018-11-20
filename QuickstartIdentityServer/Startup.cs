@@ -29,7 +29,7 @@ namespace QuickstartIdentityServer
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseCors(builder =>
             {

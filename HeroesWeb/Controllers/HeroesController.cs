@@ -1,8 +1,11 @@
 ﻿using HeroesWeb.Models;
 using HeroesWeb.Services;
+using IdentityModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,15 +24,21 @@ namespace HeroesWeb.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HeroItem>>> GetHeros(string name = null)
-        {
+        {            
             var ret = await _heroService.GetHeros(name);
 
             return ret.OrderBy(x => x.EmpNo).ToList();
         }
 
+
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<HeroItem>> GetHero(string id)
         {
+            string userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value;
+
+            //Logga vem som tittat
+
             return await _heroService.GetHero(id);
         }
 

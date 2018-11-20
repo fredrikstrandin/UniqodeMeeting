@@ -18,8 +18,8 @@ const routes: Routes = [
   { path: 'home', component: DashboardComponent },
   { path: 'callback', component: CallbackComponent },
   { path: 'unauthorized', component: UnauthorizedComponent }, 
-  { path: 'detail/:id', component: HeroDetailComponent },
-  { path: 'heroes', component: HeroesComponent,  canActivate:[AuthGuardService]  }
+  { path: 'detail/:id', component: HeroDetailComponent,  canActivate:[AuthGuardService] },
+  { path: 'heroes', component: HeroesComponent  }
 ];
 
 @NgModule({
