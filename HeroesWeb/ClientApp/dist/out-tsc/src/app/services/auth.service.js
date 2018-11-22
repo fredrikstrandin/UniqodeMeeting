@@ -106,7 +106,7 @@ var AuthService = /** @class */ (function () {
                 console.log("signed in");
                 _this._loggedIn = true;
                 _this._globalEventsManager.showNavBar(_this._loggedIn);
-                _this._router.navigate(['home']);
+                _this._router.navigate(['dashboard']);
             }).catch(function (err) {
                 console.log(err);
             });

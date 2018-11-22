@@ -59,7 +59,24 @@ namespace QuickstartIdentityServer
                     },
                     AllowedScopes = { "api1" }
                 },
+                new Client
+                {
+                    ClientId = "Test.client",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
+                    ClientSecrets =
+                    {
+                        new Secret("testing".Sha256())
+                    },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "api1"
+                    },
+                    AllowOfflineAccess = true
+                },
                 // OpenID Connect implicit flow client (MVC)
                 new Client
                 {
@@ -70,6 +87,7 @@ namespace QuickstartIdentityServer
                     
                     RedirectUris = {
                         "https://localhost:5002/callback",
+                        "http://localhost:4200/callback",
                         "https://localhost:5002/signin-oidc"
                     },
                     PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },

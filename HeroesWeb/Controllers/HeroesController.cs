@@ -2,6 +2,7 @@
 using HeroesWeb.Services;
 using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,16 +23,27 @@ namespace HeroesWeb.Controllers
             _heroService = heroService;
         }
 
+        /// <summary>
+        /// List Heroes.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get /Heroes?name=alva
+        ///
+        /// </remarks>
+        /// <param name="name">First part of name to serch for. This can be null</param>
+        /// <returns>A list of heroes</returns>
+        /// <response code="200">A list of heroes</response>
         [HttpGet]
+        [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<HeroItem>>> GetHeros(string name = null)
         {            
-            var ret = await _heroService.GetHeros(name);
-
+            var ret = await _heroService.GetHerosAsync(name);
+            
             return ret.OrderBy(x => x.EmpNo).ToList();
         }
 
-
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<HeroItem>> GetHero(string id)
         {
@@ -39,13 +51,13 @@ namespace HeroesWeb.Controllers
 
             //Logga vem som tittat
 
-            return await _heroService.GetHero(id);
+            return await _heroService.GetHeroAsync(id);
         }
 
         [HttpPost]
         public async Task<ActionResult<HeroItem>> Post([FromBody] HeroItem item)
         {
-            item = await _heroService.Create(item);
+            item = await _heroService.CreateAsync(item);
 
             if (default(HeroItem) == item)
             {
@@ -55,10 +67,11 @@ namespace HeroesWeb.Controllers
             return Ok(item);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult<HeroItem>> Put([FromBody] HeroItem item)
         {
-            item = await _heroService.Update(item);
+            item = await _heroService.UpdateAsync(item);
 
             return Ok(item);
         }
@@ -66,7 +79,7 @@ namespace HeroesWeb.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(string id)
         {
-            await _heroService.Delete(id);
+            await _heroService.DeleteAsync(id);
 
             return Ok();
         }

@@ -10,23 +10,39 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <ApplicationInsightsResourceId>/subscriptions/fd5c29fe-9bfe-4c6c-8e99-1b4cfda4e06d/resourcegroups/UniqodeMeeting/providers/microsoft.insights/components/UniqodeMeeting</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/fd5c29fe-9bfe-4c6c-8e99-1b4cfda4e06d/resourcegroups/UniqodeMeeting/providers/microsoft.insights/components/UniqodeMeeting</ApplicationInsightsAnnotationResourceId>
+    <UserSecretsId>61d9dde7-1214-47db-821c-8bb45cdbfa81</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GlobalExceptionHandler" Version="4.0.0" />
     <PackageReference Include="IdentityModel" Version="3.10.1" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HeroesServices\HeroesServices.csproj" />
+    <ProjectReference Include="..\MongoDBReposotory\MongoDBReposotory.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

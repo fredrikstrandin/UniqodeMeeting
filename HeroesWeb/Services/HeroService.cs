@@ -16,29 +16,29 @@ namespace HeroesWeb.Services
             _heroRepository = heroRepository;
         }
 
-        public async Task<IEnumerable<HeroItem>> GetHeros(string name = null)
+        public async Task<IEnumerable<HeroItem>> GetHerosAsync(string name = null)
         {
-            return await _heroRepository.GetHeros(name);
+            return await _heroRepository.GetHerosAsync(name);
         }
 
-        public async Task<HeroItem> GetHero(string id)
+        public async Task<HeroItem> GetHeroAsync(string id)
         {
-            return await _heroRepository.GetHero(id);
+            return await _heroRepository.GetHeroAsync(id);
         }
 
-        public async Task<HeroItem> Create(HeroItem item)
+        public async Task<HeroItem> CreateAsync(HeroItem item)
         {
-            return await _heroRepository.Create(item);
+            return await _heroRepository.CreateAsync(item);
         }
 
-        public async Task Delete(string id)
+        public async Task DeleteAsync(string id)
         {
-            await _heroRepository.Delete(id);
+            await _heroRepository.DeleteAsync(id);
         }
 
-        public async Task<HeroItem> Update(HeroItem item)
+        public async Task<HeroItem> UpdateAsync(HeroItem item)
         {
-            return await _heroRepository.Update(item);
+            return await _heroRepository.UpdateAsync(item);
         }
     }
 }

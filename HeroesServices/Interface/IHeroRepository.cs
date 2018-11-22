@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using HeroesWeb.Models;
 
-namespace HeroesWeb.Services
+namespace HeroesWeb.Repositorys
 {
-    public interface IHeroService
+    public interface IHeroRepository
     {
         Task<HeroItem> CreateAsync(HeroItem item);
         Task DeleteAsync(string id);

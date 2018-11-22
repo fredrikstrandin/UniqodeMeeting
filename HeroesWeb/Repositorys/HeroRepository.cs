@@ -25,17 +25,17 @@ namespace HeroesWeb.Repositorys
             };
 
 
-        public async Task<IEnumerable<HeroItem>> GetHeros(string name = null)
+        public async Task<IEnumerable<HeroItem>> GetHerosAsync(string name = null)
         {
             if (!string.IsNullOrEmpty(name))
             {
                 list = list.Where(x => x.Name.Contains(name)).ToList();
             }
 
-            return list.OrderBy(x => x.EmpNo);
+            return list;
         }
 
-        public async Task<HeroItem> GetHero(string id)
+        public async Task<HeroItem> GetHeroAsync(string id)
         {
             HeroItem hero = null;
 
@@ -44,7 +44,7 @@ namespace HeroesWeb.Repositorys
             return hero;
         }
 
-        public async Task<HeroItem> Create(HeroItem item)
+        public async Task<HeroItem> CreateAsync(HeroItem item)
         {
             if (default(HeroItem) != item)
             {
@@ -59,7 +59,7 @@ namespace HeroesWeb.Repositorys
             return item;
         }
 
-        public async Task<HeroItem> Update(HeroItem item)
+        public async Task<HeroItem> UpdateAsync(HeroItem item)
         {
             HeroItem old = list.FirstOrDefault(x => x.Id == item.Id);
             if (default(HeroItem) != old)
@@ -71,7 +71,7 @@ namespace HeroesWeb.Repositorys
             return item;
         }
 
-        public async Task Delete(string id)
+        public async Task DeleteAsync(string id)
         {
             HeroItem hero = null;
 

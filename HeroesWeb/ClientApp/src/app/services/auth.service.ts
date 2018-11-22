@@ -9,8 +9,8 @@ import { map } from 'rxjs/operators';
 const settings: any = {
     authority: 'https://localhost:5000',
     client_id: 'mvc',
-    redirect_uri: 'https://localhost:5002/callback',
-    post_logout_redirect_uri: 'https://localhost:5002/signout-callback-oidc',
+    redirect_uri: 'http://localhost:4200/callback',
+    post_logout_redirect_uri: 'http://localhost:4200/signout-callback-oidc',
     response_type: 'id_token token',
     scope: 'openid profile',
 
@@ -108,7 +108,7 @@ export class AuthService {
           console.log("signed in");
           this._loggedIn = true;
            this._globalEventsManager.showNavBar(this._loggedIn);
-          this._router.navigate(['home']);
+          this._router.navigate(['dashboard']);
         }).catch(function (err) {
           console.log(err);
         });

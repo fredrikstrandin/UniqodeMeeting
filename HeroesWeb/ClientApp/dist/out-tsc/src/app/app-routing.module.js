@@ -17,7 +17,6 @@ import { GlobalEventsManager } from './services/global.events.manager';
 var routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'home', component: DashboardComponent },
     { path: 'callback', component: CallbackComponent },
     { path: 'unauthorized', component: UnauthorizedComponent },
     { path: 'detail/:id', component: HeroDetailComponent },
