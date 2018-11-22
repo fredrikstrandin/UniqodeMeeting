@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -91,11 +92,15 @@ namespace HeroesWeb
                     //options.ApiName = "https://localhost:5000/resources";
                 });
             }
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+
+            if (_environment.IsEnvironment("Production"))
             {
-                configuration.RootPath = "ClientApp/dist";
-            });
+                // In production, the Angular files will be served from this directory
+                services.AddSpaStaticFiles(configuration =>
+                {
+                    configuration.RootPath = "ClientApp/dist";
+                });
+            }
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -173,7 +178,7 @@ namespace HeroesWeb
                             Message = ex.Message,
                         });
                     });
-                
+
                 x.OnError((exception, httpContext) =>
                 {
                     _logger.LogError(exception.Message);
@@ -209,18 +214,21 @@ namespace HeroesWeb
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Heroes API beta");
             });
 
-            //app.UseSpa(spa =>
-            //{
-            //    // To learn more about options for serving an Angular SPA from ASP.NET Core,
-            //    // see https://go.microsoft.com/fwlink/?linkid=864501
+            if (_environment.IsEnvironment("Production"))
+            {
+                app.UseSpa(spa =>
+                {
+                    // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                    // see https://go.microsoft.com/fwlink/?linkid=864501
 
-            //    spa.Options.SourcePath = "ClientApp";
+                    spa.Options.SourcePath = "ClientApp";
 
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseAngularCliServer(npmScript: "start");
-            //    }
-            //});
+                    if (env.IsDevelopment())
+                    {
+                        spa.UseAngularCliServer(npmScript: "start");
+                    }
+                });
+            }
         }
     }
 }
