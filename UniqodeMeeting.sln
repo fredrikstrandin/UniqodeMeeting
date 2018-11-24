@@ -7,11 +7,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeroesWeb", "HeroesWeb\Hero
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickstartIdentityServer", "QuickstartIdentityServer\QuickstartIdentityServer.csproj", "{7404F2CF-EA13-4CFB-9278-1C98BFFE9EA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestUniqodeMeeting", "XUnitTestUniqodeMeeting\XUnitTestUniqodeMeeting.csproj", "{B09FA3F3-3E4F-4407-BBB5-91AFCB816EC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestUniqodeMeeting", "XUnitTestUniqodeMeeting\XUnitTestUniqodeMeeting.csproj", "{B09FA3F3-3E4F-4407-BBB5-91AFCB816EC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDBReposotory", "MongoDBReposotory\MongoDBReposotory.csproj", "{DE61C32B-0E2B-462B-B1FD-12F7F7F1AFFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeroMongoDBReposotory", "MongoDBReposotory\HeroMongoDBReposotory.csproj", "{DE61C32B-0E2B-462B-B1FD-12F7F7F1AFFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroesServices", "HeroesServices\HeroesServices.csproj", "{9286FA5C-548C-45B4-AB75-E94DC0F1E3D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeroesServices", "HeroesServices\HeroesServices.csproj", "{9286FA5C-548C-45B4-AB75-E94DC0F1E3D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeroesUtils", "HeroesUtils\HeroesUtils.csproj", "{5501A0D6-15AF-42E5-A33A-159CB9A8B867}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reopsitorys", "Reopsitorys", "{C338CEC4-83C0-4DA5-8792-C977C0FF208C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{0F39F2C3-9C61-437B-A46D-98517FB5D905}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebServices", "WebServices", "{0BACBC76-7754-4E0F-80F8-949EC4D42D13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{04021DBE-BEDC-40F0-8281-0CA4BB805A93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utills", "Utills", "{2DCDEACE-973A-4D4B-87F9-0AECF898F911}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroMemoryRepository", "HeroMemoryRepository\HeroMemoryRepository.csproj", "{A70600CC-25EB-4326-8BCD-9573E72C7028}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +53,26 @@ Global
 		{9286FA5C-548C-45B4-AB75-E94DC0F1E3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9286FA5C-548C-45B4-AB75-E94DC0F1E3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9286FA5C-548C-45B4-AB75-E94DC0F1E3D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5501A0D6-15AF-42E5-A33A-159CB9A8B867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5501A0D6-15AF-42E5-A33A-159CB9A8B867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5501A0D6-15AF-42E5-A33A-159CB9A8B867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5501A0D6-15AF-42E5-A33A-159CB9A8B867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A70600CC-25EB-4326-8BCD-9573E72C7028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A70600CC-25EB-4326-8BCD-9573E72C7028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A70600CC-25EB-4326-8BCD-9573E72C7028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A70600CC-25EB-4326-8BCD-9573E72C7028}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1B71C524-CE01-48D5-89A9-DCFAD2FDBC56} = {0BACBC76-7754-4E0F-80F8-949EC4D42D13}
+		{7404F2CF-EA13-4CFB-9278-1C98BFFE9EA0} = {0BACBC76-7754-4E0F-80F8-949EC4D42D13}
+		{B09FA3F3-3E4F-4407-BBB5-91AFCB816EC4} = {04021DBE-BEDC-40F0-8281-0CA4BB805A93}
+		{DE61C32B-0E2B-462B-B1FD-12F7F7F1AFFF} = {C338CEC4-83C0-4DA5-8792-C977C0FF208C}
+		{9286FA5C-548C-45B4-AB75-E94DC0F1E3D5} = {0F39F2C3-9C61-437B-A46D-98517FB5D905}
+		{5501A0D6-15AF-42E5-A33A-159CB9A8B867} = {2DCDEACE-973A-4D4B-87F9-0AECF898F911}
+		{A70600CC-25EB-4326-8BCD-9573E72C7028} = {C338CEC4-83C0-4DA5-8792-C977C0FF208C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85443D80-F2EC-44B5-9658-7ECCBE8CB063}

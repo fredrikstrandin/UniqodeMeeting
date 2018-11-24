@@ -20,7 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HeroesServices\HeroesServices.csproj" />
     <ProjectReference Include="..\HeroesWeb\HeroesWeb.csproj" />
-    <ProjectReference Include="..\MongoDBReposotory\MongoDBReposotory.csproj" />
+    <ProjectReference Include="..\MongoDBReposotory\HeroMongoDBReposotory.csproj" />
     <ProjectReference Include="..\QuickstartIdentityServer\QuickstartIdentityServer.csproj" />
   </ItemGroup>
 

@@ -17,6 +17,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Threading.Tasks;
+using HeroMemoryRepository.DependencyInjection;
 
 namespace HeroesWeb
 {
@@ -60,9 +61,10 @@ namespace HeroesWeb
             services.Configure<MongoDbDatabaseSetting>(Configuration.GetSection("MongoDBDatabaseSetting"));
 
             services.AddScoped<IHeroService, HeroService>();
+
             if (_environment.IsEnvironment("Test"))
             {
-                services.AddScoped<IHeroRepository, HeroRepository>();
+                services.AddMemoryRepository();
             }
             else
             {
@@ -196,7 +198,10 @@ namespace HeroesWeb
             app.UseAuthentication();
 
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            if (_environment.IsEnvironment("Production"))
+            {
+                app.UseSpaStaticFiles();
+            }
 
             app.UseSwagger();
 

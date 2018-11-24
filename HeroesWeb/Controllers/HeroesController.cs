@@ -1,4 +1,5 @@
-﻿using HeroesWeb.Models;
+﻿using HeroesUtils.Attributes;
+using HeroesWeb.Models;
 using HeroesWeb.Services;
 using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +46,7 @@ namespace HeroesWeb.Controllers
         }
 
         [HttpGet("{id}")]
+        [ETagCheckFilter("HeroesEntity", "Version")]
         public async Task<ActionResult<HeroItem>> GetHero(string id)
         {
             string userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value;
