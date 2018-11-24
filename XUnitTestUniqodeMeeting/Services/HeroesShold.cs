@@ -25,7 +25,7 @@ namespace XUnit.Test.Servies
 
             private readonly Mock<IHeroRepository> _mockHeroesRepository = new Mock<IHeroRepository>();
 
-            private readonly HeroService _sut;
+            private readonly HeroesService _sut;
 
             public HeroesShold(ITestOutputHelper output,
                 MongoDbDatabaseSetting dbSetting)
@@ -33,7 +33,7 @@ namespace XUnit.Test.Servies
                 _output = output;
                 _dbSettning = dbSetting;
 
-                _sut = new HeroService(_mockHeroesRepository.Object);
+                _sut = new HeroesService(_mockHeroesRepository.Object);
 
                 _output.WriteLine("UserItem should include email.");
                 

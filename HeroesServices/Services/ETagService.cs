@@ -9,14 +9,11 @@ namespace HeroesServices.Services
 {
     public class ETagService : IETagService
     {
-        //This is supposed to be an interface but has not come about how to use Dependecy injection 
-        //without having it as a constructor parameter.
-        //private readonly IETagRepository _eTagRepository;
-        private ETagRepository _eTagRepository = new ETagRepository();
-
-        public ETagService() //(IETagRepository eTagRepository)
+        private readonly IETagRepository _eTagRepository;
+        
+        public ETagService(IETagRepository eTagRepository)
         {
-            //_eTagRepository = eTagRepository;
+            _eTagRepository = eTagRepository;
         }
 
         public async Task<long> GetETagAsync(string collection, string key, string id)

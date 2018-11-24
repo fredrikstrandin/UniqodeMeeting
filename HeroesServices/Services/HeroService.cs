@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace HeroesWeb.Services
 {
-    public class HeroService : IHeroService
+    public class HeroesService : IHeroesService
     {
         private readonly IHeroRepository _heroRepository;
 
-        public HeroService(IHeroRepository heroRepository)
+        public HeroesService(IHeroRepository heroRepository)
         {
             _heroRepository = heroRepository;
         }

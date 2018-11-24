@@ -1,4 +1,6 @@
-﻿using MongoDB.Bson;
+﻿using HeroesWeb.Models;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -9,15 +11,11 @@ namespace HeroesWeb.Repositorys
 {
     public class ETagRepository : IETagRepository
     {
-        private MongoDBContext _context;
+        private IMongoDBContext _context;
 
-        public ETagRepository()
+        public ETagRepository(IMongoDBContext context)
         {
-            _context = new MongoDBContext(new Models.MongoDbDatabaseSetting()
-            {
-                ConnectionString = "mongodb://localhost:27017",
-                Database = "UniqodeMeeting"
-            });
+            _context = context;
         }
         public async Task<long> GetETagAsync(string id, string collection, string key = "Version")
         {

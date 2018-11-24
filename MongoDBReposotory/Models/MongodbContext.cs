@@ -1,4 +1,5 @@
 ﻿using HeroesWeb.Models;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -7,22 +8,19 @@ using System.Threading.Tasks;
 
 namespace HeroesWeb.Repositorys
 {
-    internal class MongoDBContext
+    public class MongoDBContext : IMongoDBContext
     {
-        private readonly MongoDbDatabaseSetting _dbStetting;
-        
-        protected IMongoClient Client;
+        public readonly MongoDbDatabaseSetting _dbStetting;
+
+        public IMongoClient Client;
         public IMongoDatabase Database { get; set; }
 
-        public MongoDBContext(MongoDbDatabaseSetting dbStetting)
+        public MongoDBContext(IOptions<MongoDbDatabaseSetting> _dbStetting)
         {
-            _dbStetting = dbStetting;
-
-            Client = new MongoClient(_dbStetting.ConnectionString);
-            Database = Client.GetDatabase(_dbStetting.Database);
+            Client = new MongoClient(_dbStetting.Value.ConnectionString);
+            Database = Client.GetDatabase(_dbStetting.Value.Database);
         }
 
-        internal IMongoCollection<HeroesEntity> HeroesEntityCollection => Database.GetCollection<HeroesEntity>("HeroesEntity");        
+        public IMongoCollection<HeroesEntity> HeroesEntityCollection => Database.GetCollection<HeroesEntity>("HeroesEntity");        
     }
-
 }

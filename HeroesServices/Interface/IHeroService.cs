@@ -4,7 +4,7 @@ using HeroesWeb.Models;
 
 namespace HeroesWeb.Services
 {
-    public interface IHeroService
+    public interface IHeroesService
     {
         Task<HeroItem> CreateAsync(HeroItem item);
         Task DeleteAsync(string id);

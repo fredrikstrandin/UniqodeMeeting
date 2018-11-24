@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace HeroesWeb.Repositorys
 {
     [BsonIgnoreExtraElements]
-    internal class HeroesEntity : BaseEntity
+    public class HeroesEntity : BaseEntity
     {
         public int EmpNo { get; set; }
         public string Name { get; set; }

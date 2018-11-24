@@ -18,6 +18,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Threading.Tasks;
 using HeroMemoryRepository.DependencyInjection;
+using HeroesServices.Interface;
+using HeroesServices.Services;
+using HeroMongoDBRepository.DependencyInjection;
 
 namespace HeroesWeb
 {
@@ -60,7 +63,7 @@ namespace HeroesWeb
         {
             services.Configure<MongoDbDatabaseSetting>(Configuration.GetSection("MongoDBDatabaseSetting"));
 
-            services.AddScoped<IHeroService, HeroService>();
+            services.AddHeroesServices();
 
             if (_environment.IsEnvironment("Test"))
             {
@@ -68,7 +71,7 @@ namespace HeroesWeb
             }
             else
             {
-                services.AddScoped<IHeroRepository, HeroMongodbRepository>();
+                services.AddMongoDBRepository();                
             }
 
             services.AddCors();

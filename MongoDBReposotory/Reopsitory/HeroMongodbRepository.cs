@@ -13,12 +13,11 @@ namespace HeroesWeb.Repositorys
 {
     public class HeroMongodbRepository : IHeroRepository
     {
-        private readonly MongoDBContext _context;
+        private readonly IMongoDBContext _context;
         
-        public HeroMongodbRepository(
-            IOptions<MongoDbDatabaseSetting> _dbStetting)
+        public HeroMongodbRepository(IMongoDBContext context)
         {
-            _context = new MongoDBContext(_dbStetting.Value);
+            _context = context;
         }
 
         public async Task<IEnumerable<HeroItem>> GetHerosAsync(string name = null)
@@ -92,7 +91,7 @@ namespace HeroesWeb.Repositorys
             }
 
             var ret = await _context.HeroesEntityCollection.UpdateOneAsync(filter, update);
-
+            
             return entity;
         }
 

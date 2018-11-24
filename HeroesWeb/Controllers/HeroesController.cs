@@ -17,9 +17,9 @@ namespace HeroesWeb.Controllers
     [ApiController]
     public class HeroesController : ControllerBase
     {
-        private readonly IHeroService _heroService;
+        private readonly IHeroesService _heroService;
 
-        public HeroesController(IHeroService heroService)
+        public HeroesController(IHeroesService heroService)
         {
             _heroService = heroService;
         }
@@ -46,7 +46,7 @@ namespace HeroesWeb.Controllers
         }
 
         [HttpGet("{id}")]
-        [ETagCheckFilter("HeroesEntity", "Version")]
+        [ETag("HeroesEntity", "Version")]
         public async Task<ActionResult<HeroItem>> GetHero(string id)
         {
             string userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value;

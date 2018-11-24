@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace HeroesWeb.Models
 {
     [BsonIgnoreExtraElements]
-    internal class BaseEntity
+    public class BaseEntity
     {
         [BsonId]
         public ObjectId Id { get; set; }
