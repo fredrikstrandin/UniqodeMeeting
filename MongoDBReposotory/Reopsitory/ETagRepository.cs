@@ -18,6 +18,21 @@ namespace HeroesWeb.Repositorys
         {
             _context = context;
         }
+
+        public Task DeleteETagAsync(string list, string id)
+        {
+            //No need the entety vill be deletet any way.
+
+            return Task.CompletedTask;
+        }
+
+        public async Task DeleteETagAsync(string list)
+        {
+            var filter = Builders<CollectionSatusEntity>.Filter.Eq(x => x.Collection, list);
+
+            await _context.CollectionSatusEntityCollection.DeleteOneAsync(filter);
+        }
+
         public async Task<long> GetETagItemAsync(string list, string key, string id)
         {
             var coll = _context.Database.GetCollection<BsonDocument>(list);

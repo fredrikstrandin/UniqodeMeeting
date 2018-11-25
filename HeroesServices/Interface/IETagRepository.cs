@@ -8,6 +8,7 @@ namespace HeroesWeb.Repositorys
         Task<long> GetETagListAsync(string list);
         Task SetETagItemAsync(string list, string id, long value);
         Task SetETagListAsync(string list, long value);
-        
+        Task DeleteETagAsync(string list, string id);
+        Task DeleteETagAsync(string list);
     }
 }

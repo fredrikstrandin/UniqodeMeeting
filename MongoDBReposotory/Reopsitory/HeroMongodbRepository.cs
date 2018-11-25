@@ -61,7 +61,7 @@ namespace HeroesWeb.Repositorys
                     entity.EmpNo = (await _context.HeroesEntityCollection.Find(x => true)
                         .SortByDescending(a => a.EmpNo)
                         .Project(x => x.EmpNo)
-                        .FirstAsync()) + 1;
+                        .FirstOrDefaultAsync()) + 1;
                 }
 
                 await _context.HeroesEntityCollection.InsertOneAsync(entity);
@@ -106,6 +106,12 @@ namespace HeroesWeb.Repositorys
             var filter = Builders<HeroesEntity>.Filter.Eq(x => x.Id, idEntity);
 
             await _context.HeroesEntityCollection.DeleteOneAsync(filter);
+
+            return;
+        }
+        public async Task DeleteAllAsync()
+        {
+            await _context.HeroesEntityCollection.DeleteManyAsync(x => true);
 
             return;
         }

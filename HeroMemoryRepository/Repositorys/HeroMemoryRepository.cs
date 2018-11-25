@@ -86,5 +86,13 @@ namespace HeroesWeb.Repositorys
 
             return Task.CompletedTask;
         }
+        public Task DeleteAllAsync()
+        {
+            _memoryContext.Heroeslist = new List<HeroItem>();
+            _memoryContext.DictionaryItem = new Dictionary<string, Dictionary<string, long>>();
+            _memoryContext.DictionaryList = new Dictionary<string, long>();
+
+            return Task.CompletedTask;
+        }
     }
 }

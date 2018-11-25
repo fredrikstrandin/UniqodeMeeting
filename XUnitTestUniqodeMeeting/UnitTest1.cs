@@ -82,7 +82,7 @@ namespace XUnitTestUniqodeMeeting
             public async Task GetHeroes()
             {
                 HttpResponseMessage responseApi = await _apiClient.GetAsync("/api/Heroes");
-
+                
                 Assert.Equal(HttpStatusCode.OK, responseApi.StatusCode);
             }
 
@@ -99,6 +99,25 @@ namespace XUnitTestUniqodeMeeting
 
                 HeroItem respons = JsonConvert.DeserializeObject<HeroItem>(await ApiResponse.Content.ReadAsStringAsync());
                 Assert.False(string.IsNullOrEmpty(respons.Id));
+            }
+
+            [Theory]
+            [TestHeroes]
+            public async Task PutHero(HeroItem item)
+            {
+                item.Name = $"{item.Name} [updatede]";
+
+                var ApiResponse = await _apiClient.PutAsJsonAsync("/api/Heroes",
+                    item);
+
+                ApiResponse.EnsureSuccessStatusCode();
+
+                var responseString = await ApiResponse.Content.ReadAsStringAsync();
+
+                HeroItem respons = JsonConvert.DeserializeObject<HeroItem>(await ApiResponse.Content.ReadAsStringAsync());
+
+                Assert.True(respons.Id == item.Id);
+                Assert.True(respons.Name == $"{item.Name} [updatede]");
             }
         }
     }

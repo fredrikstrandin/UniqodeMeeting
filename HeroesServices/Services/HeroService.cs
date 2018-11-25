@@ -31,11 +31,8 @@ namespace HeroesWeb.Services
 
         public async Task<HeroItem> CreateAsync(HeroItem item)
         {
-            Task<HeroItem> task1 = _heroRepository.CreateAsync(item);
-            var task2 = _ETagService.SetETagAsync("HeroesEntity", item.Id, DateTime.Now.Ticks);
-
-            HeroItem ret = await task1;
-            await task2;
+            HeroItem ret = await _heroRepository.CreateAsync(item);
+            await  _ETagService.SetETagAsync("HeroesEntity", ret.Id, DateTime.Now.Ticks);
 
             return ret;
         }
@@ -43,13 +40,24 @@ namespace HeroesWeb.Services
         public async Task DeleteAsync(string id)
         {
             await _heroRepository.DeleteAsync(id);
+            var task2 = _ETagService.DeleteETagAsync("HeroesEntity", id);
+
+        }
+
+        public async Task DeleteAllAsyc()
+        {
+            var task1 = _heroRepository.DeleteAllAsync();
+            var task2 = _ETagService.DeleteETagAsync("HeroesEntity");
+
+            await task1;
+            await task2;
         }
 
         public async Task<HeroItem> UpdateAsync(HeroItem item)
         {
             var task1 = _heroRepository.UpdateAsync(item);
 
-            var task2 = _ETagService.SetETagAsync("Heroes", item.Id, DateTime.Now.Ticks);
+            var task2 = _ETagService.SetETagAsync("HeroesEntity", item.Id, DateTime.Now.Ticks);
 
             HeroItem ret = await task1;
             await task2;

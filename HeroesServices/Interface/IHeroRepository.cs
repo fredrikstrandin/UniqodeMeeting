@@ -11,5 +11,6 @@ namespace HeroesWeb.Repositorys
         Task<IEnumerable<HeroItem>> GetHerosAsync(string name = null);
         Task<HeroItem> GetHeroAsync(string id);
         Task<HeroItem> UpdateAsync(HeroItem item);
+        Task DeleteAllAsync();
     }
 }

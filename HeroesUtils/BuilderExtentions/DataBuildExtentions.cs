@@ -17,7 +17,7 @@ namespace HeroesUtils.BuilderExtentions
         //
         // Returns:
         //     The Microsoft.AspNetCore.Builder.IApplicationBuilder for HttpsRedirection.
-        public static IApplicationBuilder UseData(this IApplicationBuilder app)
+        public static IApplicationBuilder UseInsertData(this IApplicationBuilder app)
         {
             IHeroesService _heroesService = (IHeroesService)app.ApplicationServices.GetService(typeof(IHeroesService));
 
@@ -39,6 +39,25 @@ namespace HeroesUtils.BuilderExtentions
                 var x = _heroesService.CreateAsync(item);
                 x.Wait();
             }
+
+            return app;
+        }
+
+        //
+        // Summary:
+        //     Adds Date to application.
+        //
+        // Parameters:
+        //   app:
+        //     The Microsoft.AspNetCore.Builder.IApplicationBuilder instance this method extends.
+        //
+        // Returns:
+        //     The Microsoft.AspNetCore.Builder.IApplicationBuilder for HttpsRedirection.
+        public static IApplicationBuilder UseRemoveData(this IApplicationBuilder app)
+        {
+            IHeroesService _heroesService = (IHeroesService)app.ApplicationServices.GetService(typeof(IHeroesService));
+
+            _heroesService.DeleteAllAsyc();
 
             return app;
         }

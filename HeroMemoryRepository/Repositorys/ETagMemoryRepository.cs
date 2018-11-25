@@ -70,5 +70,30 @@ namespace HeroesWeb.Repositorys
 
             return Task.CompletedTask;
         }
+
+        public Task DeleteETagAsync(string list, string id)
+        {
+            if (_context.DictionaryItem.ContainsKey(list))
+            {
+                _context.DictionaryItem[list].Remove(id);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteETagAsync(string list)
+        {
+            if (_context.DictionaryList.ContainsKey(list))
+            {
+                _context.DictionaryList.Remove(list);
+            }
+
+            if (_context.DictionaryItem.ContainsKey(list))
+            {
+                _context.DictionaryItem[list] = new Dictionary<string, long>();
+            }
+
+            return Task.CompletedTask;
+        }
     }
 }

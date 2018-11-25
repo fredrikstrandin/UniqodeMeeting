@@ -16,6 +16,16 @@ namespace HeroesServices.Services
             _eTagRepository = eTagRepository;
         }
 
+        public async Task DeleteETagAsync(string list, string id)
+        {
+            await _eTagRepository.DeleteETagAsync(list, id);
+        }
+
+        public async Task DeleteETagAsync(string list)
+        {
+            await _eTagRepository.DeleteETagAsync(list);
+        }
+
         public async Task<long> GetETagItemAsync(string collection, string key, string id)
         {
             return await _eTagRepository.GetETagItemAsync(collection, key, id);

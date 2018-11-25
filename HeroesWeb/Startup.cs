@@ -29,7 +29,7 @@ namespace HeroesWeb
         public Startup(
             ILogger<Startup> logger,
             IHostingEnvironment environment,
-            IConfiguration configuration)
+            IConfigurationRoot configuration)
         {
             _logger = logger;
             _environment = environment;
@@ -53,23 +53,21 @@ namespace HeroesWeb
             Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoDbDatabaseSetting>(Configuration.GetSection("MongoDBDatabaseSetting"));
-
             services.AddHeroesServices();
 
-            //if (_environment.IsEnvironment("Test"))
-            //{
+            if (_environment.IsEnvironment("Test"))
+            {
                 services.AddMemoryRepository();
-            //}
-            //else
-            //{
-            //    services.AddMongoDBRepository();                
-            //}
+            }
+            else
+            {
+                services.AddMongoDBRepository(Configuration);                
+            }
 
             services.AddCors();
 
@@ -148,7 +146,11 @@ namespace HeroesWeb
                 app.UseHsts();
             }
 
-            app.UseData();
+            if (_environment.IsEnvironment("Test") || _environment.IsEnvironment("Development"))
+            {
+                app.UseRemoveData();
+                app.UseInsertData();
+            }
 
             app.UseCors(builder =>
             {
