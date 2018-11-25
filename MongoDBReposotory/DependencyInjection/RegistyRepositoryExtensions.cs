@@ -7,7 +7,7 @@ namespace HeroMongoDBRepository.DependencyInjection
 {
     public static class RegistyRepositoryExtensions
     {
-        public static IServiceCollection AddMongoDBRepository(this IServiceCollection services, IConfigurationRoot configuration)
+        public static IServiceCollection AddMongoDBRepository(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<MongoDbDatabaseSetting>(configuration.GetSection("MongoDBDatabaseSetting"));
 

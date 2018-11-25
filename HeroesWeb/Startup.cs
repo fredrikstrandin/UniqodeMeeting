@@ -29,7 +29,7 @@ namespace HeroesWeb
         public Startup(
             ILogger<Startup> logger,
             IHostingEnvironment environment,
-            IConfigurationRoot configuration)
+            IConfiguration configuration)
         {
             _logger = logger;
             _environment = environment;
@@ -53,7 +53,7 @@ namespace HeroesWeb
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
