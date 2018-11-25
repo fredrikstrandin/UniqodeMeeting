@@ -9,8 +9,8 @@ namespace HeroMongoDBRepository.DependencyInjection
     {
         public static IServiceCollection AddHeroesServices(this IServiceCollection services)
         {
-            services.AddScoped<IHeroesService, HeroesService>();
-            services.AddScoped<IETagService, ETagService>();
+            services.AddSingleton<IHeroesService, HeroesService>();
+            services.AddSingleton<IETagService, ETagService>();
 
             return services;
         }

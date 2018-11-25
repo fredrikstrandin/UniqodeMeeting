@@ -7,7 +7,8 @@ namespace HeroesServices.Interface
 {
     public interface IETagService
     {
-        Task<long> GetETagAsync(string collection, string key, string id);
-        void SetETagAsync(string collection, string key, string id, long value);
+        Task<long> GetETagItemAsync(string list, string key, string id);
+        Task<long> GetETagListAsync(string list);
+        Task SetETagAsync(string list, string id, long value);        
     }
 }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using HeroMongoDBReposotory.Models;
+using MongoDB.Driver;
 
 namespace HeroesWeb.Repositorys
 {
@@ -6,5 +7,6 @@ namespace HeroesWeb.Repositorys
     {
         IMongoDatabase Database { get; set; }
         IMongoCollection<HeroesEntity> HeroesEntityCollection { get; }
+        IMongoCollection<CollectionSatusEntity> CollectionSatusEntityCollection { get; }
     }
 }

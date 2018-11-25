@@ -1,4 +1,5 @@
 ﻿using HeroesWeb.Models;
+using HeroMongoDBReposotory.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
@@ -21,6 +22,7 @@ namespace HeroesWeb.Repositorys
             Database = Client.GetDatabase(_dbStetting.Value.Database);
         }
 
-        public IMongoCollection<HeroesEntity> HeroesEntityCollection => Database.GetCollection<HeroesEntity>("HeroesEntity");        
+        public IMongoCollection<HeroesEntity> HeroesEntityCollection => Database.GetCollection<HeroesEntity>("HeroesEntity");
+        public IMongoCollection<CollectionSatusEntity> CollectionSatusEntityCollection => Database.GetCollection<CollectionSatusEntity>("CollectionSatusEntity");
     }
 }

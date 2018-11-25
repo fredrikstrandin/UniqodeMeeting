@@ -1,4 +1,5 @@
 ﻿using HeroesWeb.Models;
+using HeroMongoDBReposotory.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -17,9 +18,9 @@ namespace HeroesWeb.Repositorys
         {
             _context = context;
         }
-        public async Task<long> GetETagAsync(string id, string collection, string key = "Version")
+        public async Task<long> GetETagItemAsync(string list, string key, string id)
         {
-            var coll = _context.Database.GetCollection<BsonDocument>(collection);
+            var coll = _context.Database.GetCollection<BsonDocument>(list);
 
             var projection = Builders<long>.Projection.Include(key).Exclude("_id");
 
@@ -43,15 +44,51 @@ namespace HeroesWeb.Repositorys
             }
         }
 
-        public async Task SetETagAsync(string collection, string key, string id, long value)
+        public async Task<long> GetETagListAsync(string list)
         {
-            var coll = _context.Database.GetCollection<BsonDocument>(collection);
+            var versionProjection = Builders<CollectionSatusEntity>.Projection
+                                        .Include(x => x.Version)
+                                        .Exclude("_id");
 
-            var filter = Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(id));
+            var query = _context.CollectionSatusEntityCollection.Find(x => x.Collection == list)
+                .Project<CollectionSatusEntity>(versionProjection);
 
-            var update = await coll.UpdateOneAsync(Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(id)),
-                Builders<BsonDocument>.Update
-                    .Set("Version", DateTime.Now.Millisecond));
+            var o = await query.FirstOrDefaultAsync();
+
+            if (o != null)
+            {
+                return o.Version;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public Task SetETagItemAsync(string collection, string id, long value)
+        {
+            //var coll = _context.Database.GetCollection<BsonDocument>(collection);
+
+            //var filter = Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(id));
+
+            //var update = await coll.UpdateOneAsync(Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(id)),
+            //    Builders<BsonDocument>.Update
+            //        .Set("Version", value));
+
+            return Task.CompletedTask;
+        }
+
+        public async Task SetETagListAsync(string collection, long value)
+        {
+            var update = await _context.CollectionSatusEntityCollection.UpdateOneAsync(
+                Builders<CollectionSatusEntity>.Filter.Eq(x => x.Collection, collection),
+                Builders<CollectionSatusEntity>.Update
+                    .Set("Version", value));
+
+            if(update.MatchedCount == 0)
+            {
+                await _context.CollectionSatusEntityCollection.InsertOneAsync(new CollectionSatusEntity() { Collection = collection, Version = value });
+            }
         }
     }
 }

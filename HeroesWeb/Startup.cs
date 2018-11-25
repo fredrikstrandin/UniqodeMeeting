@@ -1,7 +1,8 @@
 ﻿using GlobalExceptionHandler.WebApi;
+using HeroesUtils.BuilderExtentions;
 using HeroesWeb.Models;
-using HeroesWeb.Repositorys;
-using HeroesWeb.Services;
+using HeroMemoryRepository.DependencyInjection;
+using HeroMongoDBRepository.DependencyInjection;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -17,10 +18,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Threading.Tasks;
-using HeroMemoryRepository.DependencyInjection;
-using HeroesServices.Interface;
-using HeroesServices.Services;
-using HeroMongoDBRepository.DependencyInjection;
 
 namespace HeroesWeb
 {
@@ -65,14 +62,14 @@ namespace HeroesWeb
 
             services.AddHeroesServices();
 
-            if (_environment.IsEnvironment("Test"))
-            {
+            //if (_environment.IsEnvironment("Test"))
+            //{
                 services.AddMemoryRepository();
-            }
-            else
-            {
-                services.AddMongoDBRepository();                
-            }
+            //}
+            //else
+            //{
+            //    services.AddMongoDBRepository();                
+            //}
 
             services.AddCors();
 
@@ -151,6 +148,7 @@ namespace HeroesWeb
                 app.UseHsts();
             }
 
+            app.UseData();
 
             app.UseCors(builder =>
             {

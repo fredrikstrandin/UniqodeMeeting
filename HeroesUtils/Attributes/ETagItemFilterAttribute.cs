@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace HeroesUtils.Attributes
 {
-    public class ETagAttribute : Attribute, IAsyncActionFilter
+    public class ETagItemAttribute : Attribute, IAsyncActionFilter
     {
         public string _collection;
         public string _key;
         
-        public ETagAttribute(string collection, string key)
+        public ETagItemAttribute(string collection, string key = "Version")
         {
             _collection = collection;
             _key = key;
@@ -25,14 +25,9 @@ namespace HeroesUtils.Attributes
             {
                 string id = (string)context.RouteData.Values["id"];
 
-                long eTag = await _eTagService.GetETagAsync(_collection, _key, id);
+                long eTag = await _eTagService.GetETagItemAsync(_collection, _key, id);
 
-                if (eTag == 0)
-                {
-                    context.Result = new NotFoundResult();
-                    return;
-                }
-                else
+                if (eTag != 0)
                 {
                     if (context.HttpContext.Request.Headers.ContainsKey("If-None-Match") && context.HttpContext.Request.Headers["If-None-Match"] == eTag.ToString())
                     {

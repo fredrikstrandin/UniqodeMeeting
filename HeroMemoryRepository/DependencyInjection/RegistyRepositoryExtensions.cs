@@ -13,8 +13,9 @@ namespace HeroMemoryRepository.DependencyInjection
         public static IServiceCollection AddMemoryRepository(this IServiceCollection services)
         {
             services.AddSingleton<IMemoryContext, MemoryContext>();
-            services.AddScoped<IHeroRepository, HeroesMemoryRepository>();
-            
+            services.AddSingleton<IHeroRepository, HeroesMemoryRepository>();
+            services.AddSingleton<IETagRepository, ETagMemoryRepository>();
+
             return services;
         }
     }

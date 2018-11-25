@@ -16,14 +16,23 @@ namespace HeroesServices.Services
             _eTagRepository = eTagRepository;
         }
 
-        public async Task<long> GetETagAsync(string collection, string key, string id)
+        public async Task<long> GetETagItemAsync(string collection, string key, string id)
         {
-            return await _eTagRepository.GetETagAsync(id, collection, key);
+            return await _eTagRepository.GetETagItemAsync(collection, key, id);
         }
 
-        public async void SetETagAsync(string collection, string key, string id, long value)
+        public async Task<long> GetETagListAsync(string list)
         {
-            await _eTagRepository.SetETagAsync(collection, key, id, value);
+            return await _eTagRepository.GetETagListAsync(list);
+        }
+
+        public async Task SetETagAsync(string collection, string id, long value)
+        {
+            Task task1 = _eTagRepository.SetETagItemAsync(collection, id, value);
+            Task task2 = _eTagRepository.SetETagListAsync(collection, value);
+
+            await task1;
+            await task2;
         }
     }
 }

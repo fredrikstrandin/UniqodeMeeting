@@ -1,4 +1,5 @@
-﻿using HeroesWeb.Models;
+﻿using HeroesServices.Interface;
+using HeroesWeb.Models;
 using HeroesWeb.Repositorys;
 using HeroesWeb.Services;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,7 @@ namespace XUnit.Test.Servies
             private readonly MongoDbDatabaseSetting _dbSettning;
 
             private readonly Mock<IHeroRepository> _mockHeroesRepository = new Mock<IHeroRepository>();
-
+            private readonly Mock<IETagService> _mockETagService = new Mock<IETagService>();
             private readonly HeroesService _sut;
 
             public HeroesShold(ITestOutputHelper output,
@@ -33,7 +34,7 @@ namespace XUnit.Test.Servies
                 _output = output;
                 _dbSettning = dbSetting;
 
-                _sut = new HeroesService(_mockHeroesRepository.Object);
+                _sut = new HeroesService(_mockHeroesRepository.Object, _mockETagService.Object);
 
                 _output.WriteLine("UserItem should include email.");
                 

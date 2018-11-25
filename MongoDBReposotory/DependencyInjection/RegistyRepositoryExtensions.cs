@@ -1,4 +1,5 @@
-﻿using HeroesWeb.Repositorys;
+﻿using HeroesWeb.Models;
+using HeroesWeb.Repositorys;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HeroMongoDBRepository.DependencyInjection
@@ -8,9 +9,8 @@ namespace HeroMongoDBRepository.DependencyInjection
         public static IServiceCollection AddMongoDBRepository(this IServiceCollection services)
         {
             services.AddSingleton<IMongoDBContext, MongoDBContext>();
-            services.AddScoped<IHeroRepository, HeroMongodbRepository>();
-
-            services.AddScoped<IETagRepository, ETagRepository>();
+            services.AddSingleton<IHeroRepository, HeroMongodbRepository>();
+            services.AddSingleton<IETagRepository, ETagRepository>();
 
             return services;
         }

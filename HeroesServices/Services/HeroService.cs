@@ -1,4 +1,5 @@
-﻿using HeroesWeb.Models;
+﻿using HeroesServices.Interface;
+using HeroesWeb.Models;
 using HeroesWeb.Repositorys;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,12 @@ namespace HeroesWeb.Services
     public class HeroesService : IHeroesService
     {
         private readonly IHeroRepository _heroRepository;
+        private readonly IETagService _ETagService;
 
-        public HeroesService(IHeroRepository heroRepository)
+        public HeroesService(IHeroRepository heroRepository, IETagService ETagService)
         {
             _heroRepository = heroRepository;
+            _ETagService = ETagService;
         }
 
         public async Task<IEnumerable<HeroItem>> GetHerosAsync(string name = null)
@@ -28,7 +31,13 @@ namespace HeroesWeb.Services
 
         public async Task<HeroItem> CreateAsync(HeroItem item)
         {
-            return await _heroRepository.CreateAsync(item);
+            Task<HeroItem> task1 = _heroRepository.CreateAsync(item);
+            var task2 = _ETagService.SetETagAsync("HeroesEntity", item.Id, DateTime.Now.Ticks);
+
+            HeroItem ret = await task1;
+            await task2;
+
+            return ret;
         }
 
         public async Task DeleteAsync(string id)
@@ -38,7 +47,14 @@ namespace HeroesWeb.Services
 
         public async Task<HeroItem> UpdateAsync(HeroItem item)
         {
-            return await _heroRepository.UpdateAsync(item);
+            var task1 = _heroRepository.UpdateAsync(item);
+
+            var task2 = _ETagService.SetETagAsync("Heroes", item.Id, DateTime.Now.Ticks);
+
+            HeroItem ret = await task1;
+            await task2;
+
+            return ret;
         }
     }
 }

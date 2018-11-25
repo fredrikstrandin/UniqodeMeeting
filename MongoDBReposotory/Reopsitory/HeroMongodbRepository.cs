@@ -1,4 +1,5 @@
 ﻿using HeroesWeb.Models;
+using HeroMongoDBReposotory.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;

@@ -49,8 +49,13 @@ namespace HeroesWeb.Repositorys
                 if (string.IsNullOrEmpty(item.Id))
                 {
                     item.Id = Guid.NewGuid().ToString();
+                }
+
+                if (default(int) == item.EmpNo)
+                {
                     item.EmpNo = _memoryContext.Heroeslist.Max(x => x.EmpNo) + 1;
                 }
+
                 _memoryContext.Heroeslist.Add(item);
             }
 

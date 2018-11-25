@@ -37,6 +37,7 @@ namespace HeroesWeb.Controllers
         /// <returns>A list of heroes</returns>
         /// <response code="200">A list of heroes</response>
         [HttpGet]
+        [ETagList("HeroesEntity")]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<HeroItem>>> GetHeros(string name = null)
         {            
@@ -46,7 +47,7 @@ namespace HeroesWeb.Controllers
         }
 
         [HttpGet("{id}")]
-        [ETag("HeroesEntity", "Version")]
+        [ETagItem("HeroesEntity", "Version")]
         public async Task<ActionResult<HeroItem>> GetHero(string id)
         {
             string userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value;
