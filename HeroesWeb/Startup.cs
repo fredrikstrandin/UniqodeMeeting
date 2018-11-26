@@ -67,15 +67,17 @@ namespace HeroesWeb
             }
             else
             {
-                services.AddMongoDBRepository(Configuration);                
+                services.AddMongoDBRepository(Configuration);
             }
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
                 builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .WithOrigins("http://localhost:4200/");
+                .AllowAnyOrigin();
+                //.WithOrigins("http://localhost:4200");
             }));
+
             services.AddSignalR();
 
             services.AddMvcCore()
@@ -100,7 +102,7 @@ namespace HeroesWeb
                 });
             }
 
-            if (_environment.IsEnvironment("Production"))
+            //if (_environment.IsEnvironment("Production"))
             {
                 // In production, the Angular files will be served from this directory
                 services.AddSpaStaticFiles(configuration =>
@@ -159,6 +161,9 @@ namespace HeroesWeb
                 app.UseInsertData();
             }
 
+
+            app.UseCors("CorsPolicy");
+
             app.UseGlobalExceptionHandler(x =>
             {
                 x.ContentType = "application/json";
@@ -200,7 +205,7 @@ namespace HeroesWeb
             app.UseAuthentication();
 
             app.UseStaticFiles();
-            if (_environment.IsEnvironment("Production"))
+            //if (_environment.IsEnvironment("Production"))
             {
                 app.UseSpaStaticFiles();
             }
@@ -214,7 +219,6 @@ namespace HeroesWeb
                     template: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseCors("CorsPolicy");
             app.UseSignalR(routes =>
             {
                 routes.MapHub<NotifyHub>("/notify");
@@ -227,7 +231,7 @@ namespace HeroesWeb
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Heroes API beta");
             });
 
-            if (_environment.IsEnvironment("Production"))
+            //if (_environment.IsEnvironment("Production"))
             {
                 app.UseSpa(spa =>
                 {

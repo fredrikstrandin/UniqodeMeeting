@@ -8,5 +8,7 @@ namespace HeroesServices.Interface
     public interface ITypedHubClient
     {
         Task BroadcastMessage(string type, string payload);
+        Task AdminMessage(string type, string payload);
+
     }
 }

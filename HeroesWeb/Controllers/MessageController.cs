@@ -27,7 +27,7 @@ namespace HeroesWeb.Controllers
         {
             string retMessage = string.Empty;
 
-            _hubContext.Clients.All.BroadcastMessage(msg.Type, msg.Payload);
+            _hubContext.Clients.All.AdminMessage(msg.Type, msg.Payload);
             retMessage = "Success";
 
             return retMessage;

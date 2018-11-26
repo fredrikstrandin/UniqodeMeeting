@@ -20,6 +20,9 @@ import { CallbackComponent } from './callback/callback.component';
 import { NavMenuComponent } from './navmenu/navmenu.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
+import { GrowlModule } from 'primeng/primeng';
+
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     AppRoutingModule,
     HttpModule,
     HttpClientModule,
+    GrowlModule,
 
     //// The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     //// and returns simulated server responses.
