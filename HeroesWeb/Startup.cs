@@ -1,5 +1,6 @@
 ﻿using GlobalExceptionHandler.WebApi;
 using HeroesUtils.BuilderExtentions;
+using HeroesWeb.Hub;
 using HeroesWeb.Models;
 using HeroMemoryRepository.DependencyInjection;
 using HeroMongoDBRepository.DependencyInjection;
@@ -69,7 +70,13 @@ namespace HeroesWeb
                 services.AddMongoDBRepository(Configuration);                
             }
 
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
+                builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("http://localhost:4200/");
+            }));
+            services.AddSignalR();
 
             services.AddMvcCore()
                 .AddJsonFormatters()
@@ -152,14 +159,6 @@ namespace HeroesWeb
                 app.UseInsertData();
             }
 
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin();
-                builder.AllowAnyHeader();
-                builder.AllowAnyMethod();
-            });
-
-
             app.UseGlobalExceptionHandler(x =>
             {
                 x.ContentType = "application/json";
@@ -213,6 +212,12 @@ namespace HeroesWeb
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
+            });
+
+            app.UseCors("CorsPolicy");
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotifyHub>("/notify");
             });
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
