@@ -1,6 +1,8 @@
-﻿using HeroesWeb.Models;
+﻿using HeroesServices.Models.Skills;
+using HeroesWeb.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace HeroMongoDBReposotory.Models
 {
@@ -11,6 +13,7 @@ namespace HeroMongoDBReposotory.Models
         public string Name { get; set; }
         public string NameNormalize => Name.Normalize();
         public string City { get; set; }
+        public List<Skill> Skills { get; set; }
 
         public static implicit operator HeroesEntity(HeroItem item)
         {
@@ -21,7 +24,8 @@ namespace HeroMongoDBReposotory.Models
                 Id = id,
                 EmpNo = item.EmpNo,
                 Name = item.Name,
-                City = item.City
+                City = item.City,
+                Skills = item.Skills
             };
         }
 
@@ -32,7 +36,8 @@ namespace HeroMongoDBReposotory.Models
                 Id = item.Id.ToString(),
                 EmpNo = item.EmpNo,
                 Name = item.Name,
-                City = item.City
+                City = item.City,
+                Skills = item.Skills
             };
         }
     }
