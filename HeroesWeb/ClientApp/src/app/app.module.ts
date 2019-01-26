@@ -21,6 +21,7 @@ import { NavMenuComponent } from './navmenu/navmenu.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 import { GrowlModule } from 'primeng/primeng';
+import { JumbotronComponent } from './jumbotron/jumbotron.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { GrowlModule } from 'primeng/primeng';
     AdminComponent,
     CallbackComponent,
     NavMenuComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    JumbotronComponent
   ],
   bootstrap: [ AppComponent ]
 })

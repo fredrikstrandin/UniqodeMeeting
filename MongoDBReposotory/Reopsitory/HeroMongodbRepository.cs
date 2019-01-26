@@ -72,6 +72,7 @@ namespace HeroesWeb.Repositorys
             return null;
         }
 
+
         public async Task<HeroItem> UpdateAsync(HeroItem item)
         {
             HeroesEntity entity = item;

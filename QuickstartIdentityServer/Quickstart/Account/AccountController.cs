@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Authentication;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
+using System.Diagnostics;
+using Microsoft.Extensions.Primitives;
 
 namespace IdentityServer4.Quickstart.UI
 {
@@ -84,7 +86,7 @@ namespace IdentityServer4.Quickstart.UI
                     // denied the consent (even if this client does not require consent).
                     // this will send back an access denied OIDC error response to the client.
                     await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
-                    
+
                     // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                     return Redirect(model.ReturnUrl);
                 }

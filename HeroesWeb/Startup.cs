@@ -8,6 +8,7 @@ using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -70,14 +71,15 @@ namespace HeroesWeb
                 services.AddMongoDBRepository(Configuration);
             }
 
-            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
-                builder
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowAnyOrigin();
-                //.WithOrigins("http://localhost:4200");
-            }));
 
+            var policy = new CorsPolicy();
+                policy.Headers.Add("*");
+                policy.Methods.Add("*");
+                policy.Origins.Add("http://localhost:4200");
+                policy.SupportsCredentials = true;
+
+            services.AddCors(x => x.AddPolicy("CorsPolicy", policy));
+            
             services.AddSignalR();
 
             services.AddMvcCore()
@@ -97,12 +99,10 @@ namespace HeroesWeb
                 {
                     options.Authority = Configuration["UrlSetting:OAuthServerUrl"];
                     options.RequireHttpsMetadata = false;
-
-                    //options.ApiName = "https://localhost:5000/resources";
                 });
             }
 
-            //if (_environment.IsEnvironment("Production"))
+            if (_environment.IsEnvironment("Production"))
             {
                 // In production, the Angular files will be served from this directory
                 services.AddSpaStaticFiles(configuration =>
@@ -205,7 +205,7 @@ namespace HeroesWeb
             app.UseAuthentication();
 
             app.UseStaticFiles();
-            //if (_environment.IsEnvironment("Production"))
+            if (_environment.IsEnvironment("Production"))
             {
                 app.UseSpaStaticFiles();
             }
@@ -221,7 +221,7 @@ namespace HeroesWeb
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<NotifyHub>("/notify");
+                routes.MapHub<HeroesHub>("/heroes");
             });
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
@@ -231,7 +231,7 @@ namespace HeroesWeb
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Heroes API beta");
             });
 
-            //if (_environment.IsEnvironment("Production"))
+            if (_environment.IsEnvironment("Production"))
             {
                 app.UseSpa(spa =>
                 {

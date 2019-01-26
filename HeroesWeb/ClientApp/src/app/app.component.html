@@ -1,10 +1,12 @@
-<h1>{{title}}</h1>
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/heroes">Heroes</a>
-</nav>
+<div>
+    <nav-menu></nav-menu>
+    <p-growl [(value)]="msgs"></p-growl>
+    <div class="container">
+          
+      <app-jumbotron></app-jumbotron>
 
-<p-growl [(value)]="msgs"></p-growl>
-
-<router-outlet></router-outlet>
-<app-messages></app-messages>
+      <h1>{{title}}</h1>
+      <router-outlet></router-outlet>
+      <app-messages></app-messages>
+    </div>
+</div>

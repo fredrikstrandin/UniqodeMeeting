@@ -3,6 +3,7 @@ import { HubConnection } from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
 
 import { Message } from 'primeng/api';
+import { Hero } from './hero';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
 
   ngOnInit(): void {
     this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:5002/notify')
+      .withUrl('https://localhost:5002/heroes')
       .configureLogging(signalR.LogLevel.Information)
       .build();
 
@@ -30,8 +31,16 @@ export class AppComponent {
       this.msgs.push({ severity: type, summary: payload });
     });
 
-    this._hubConnection.on('AdminMessage', (type: string, payload: string) => {
-      this.msgs.push({ severity: type, summary: 'Admin:' + payload });
+    this._hubConnection.on('AddHeroes', (item: Hero) => {
+      this.msgs.push({ severity: 'success', summary: 'Hero addes:' + item.name });
+    });
+    
+    this._hubConnection.on('UpdateHeroes', (item: Hero) => {
+      this.msgs.push({ severity: 'success', summary: 'Hero updated:' + item.name });
+    });
+    
+    this._hubConnection.on('DelteHeroes', (id: string) => {
+      this.msgs.push({ severity: 'success', summary: 'Hero deleted:' + id });
     });
   }
 }

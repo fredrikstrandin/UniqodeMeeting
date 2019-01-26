@@ -88,6 +88,7 @@ namespace QuickstartIdentityServer
                     RedirectUris = {
                         "https://localhost:5002/callback",
                         "http://localhost:4200/callback",
+                        "http://localhost:4200/index.html",
                         "https://localhost:5002/signin-oidc"
                     },
                     PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
@@ -116,7 +117,9 @@ namespace QuickstartIdentityServer
                     Claims = new List<Claim>
                     {
                         new Claim("name", "Alice"),
-                        new Claim("website", "https://alice.com")
+                        new Claim("website", "https://alice.com"),
+                        new Claim("given_name", "Alice")
+
                     }
                 },
                 new TestUser
@@ -128,7 +131,8 @@ namespace QuickstartIdentityServer
                     Claims = new List<Claim>
                     {
                         new Claim("name", "Bob"),
-                        new Claim("website", "https://bob.com")
+                        new Claim("website", "https://bob.com"),
+                        new Claim("given_name", "Bob")
                     }
                 }
             };

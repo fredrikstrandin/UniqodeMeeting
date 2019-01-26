@@ -15,9 +15,9 @@ namespace HeroesWeb.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
-        private IHubContext<NotifyHub, ITypedHubClient> _hubContext;
+        private IHubContext<HeroesHub, IHeroesHubClient> _hubContext;
 
-        public MessageController(IHubContext<NotifyHub, ITypedHubClient> hubContext)
+        public MessageController(IHubContext<HeroesHub, IHeroesHubClient> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -27,7 +27,7 @@ namespace HeroesWeb.Controllers
         {
             string retMessage = string.Empty;
 
-            _hubContext.Clients.All.AdminMessage(msg.Type, msg.Payload);
+            _hubContext.Clients.All.BroadcastMessage(msg.Type, msg.Payload);
             retMessage = "Success";
 
             return retMessage;

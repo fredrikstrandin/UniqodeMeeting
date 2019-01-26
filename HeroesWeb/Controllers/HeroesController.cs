@@ -1,10 +1,13 @@
-﻿using HeroesUtils.Attributes;
+﻿using HeroesServices.Interface;
+using HeroesUtils.Attributes;
+using HeroesWeb.Hub;
 using HeroesWeb.Models;
 using HeroesWeb.Services;
 using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,10 +21,12 @@ namespace HeroesWeb.Controllers
     public class HeroesController : ControllerBase
     {
         private readonly IHeroesService _heroService;
+        private IHubContext<HeroesHub, IHeroesHubClient> _hubContext;
 
-        public HeroesController(IHeroesService heroService)
+        public HeroesController(IHeroesService heroService, IHubContext<HeroesHub, IHeroesHubClient> hubContext)
         {
             _heroService = heroService;
+            _hubContext = hubContext;
         }
 
         /// <summary>
@@ -67,6 +72,8 @@ namespace HeroesWeb.Controllers
                 return NotFound();
             }
 
+            await _hubContext.Clients.All.AddHeroes(item);
+
             return Ok(item);
         }
 
@@ -76,6 +83,8 @@ namespace HeroesWeb.Controllers
         {
             item = await _heroService.UpdateAsync(item);
 
+            await _hubContext.Clients.All.UpdateHeroes(item);
+
             return Ok(item);
         }
 
@@ -83,6 +92,7 @@ namespace HeroesWeb.Controllers
         public async Task<ActionResult> Delete(string id)
         {
             await _heroService.DeleteAsync(id);
+            await _hubContext.Clients.All.DeleteHeroes(id);
 
             return Ok();
         }

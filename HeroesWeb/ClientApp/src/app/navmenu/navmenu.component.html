@@ -1,43 +1,36 @@
-<div class='main-nav'>
-    <div class='navbar navbar-inverse'>
-        <div class='navbar-header'>
-            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                <span class='sr-only'>Toggle navigation</span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-            </button>
-            <a class='navbar-brand' [routerLink]="['/dashboard']">WebApplicationBasic</a>
-        </div>
-        <div class='clearfix'></div>
-        <div class='navbar-collapse collapse'>
-            <ul class='nav navbar-nav'>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/dashboard']">
-                        <span class='glyphicon glyphicon-home'></span> dashboard
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#">Heroes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"routerLink="/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"routerLink="/heroes">Heroes</a>
+                </li>
+                <li class="nav-item" *ngIf="!_loggedIn" [routerLinkActive]="['link-active']">
+                    <a class="nav-link" (click)="login()" [routerLink]="['/login']">
+                        <span class="glyphicon glyphicon-user"></span>Login
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/counter']">
-                        <span class='glyphicon glyphicon-education'></span> Counter
-                    </a>
-                </li>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/fetch-data']">
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
-                    </a>
-                </li>
-                <li *ngIf="!_loggedIn" [routerLinkActive]="['link-active']">
-                    <a (click)="login()" [routerLink]="['/login']">
-                        <span class="glyphicon glyphicon-user"></span> Login
-                    </a>
-                </li>
-                <li *ngIf="_loggedIn" [routerLinkActive]="['link-active']">
-                    <a (click)="logout()" [routerLink]="['/logout']">
-                        <span class='glyphicon glyphicon-log-out'></span> Logout
+                <li class="nav-item" *ngIf="_loggedIn" [routerLinkActive]="['link-active']">
+                    <a class="nav-link"(click)="logout()" [routerLink]="['/logout']">
+                        <span class='glyphicon glyphicon-log-out'></span> Logout    
                     </a>
                 </li>
             </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
     </div>
-</div>
+</nav>

@@ -19,7 +19,7 @@ export class HeroService {
   private heroesUrl = 'https://localhost:5002/api/heroes';  // URL to web api
 
   constructor(
-    private http: HttpClient,
+    private http: HttpClient    ,
     private auth: AuthService,
     private messageService: MessageService) { }    
 
