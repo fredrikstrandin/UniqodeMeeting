@@ -1,5 +1,9 @@
 ﻿using GlobalExceptionHandler.WebApi;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using HeroesUtils.BuilderExtentions;
+using HeroesWeb.GraphQL;
 using HeroesWeb.Models;
 using HeroMemoryRepository.DependencyInjection;
 using HeroMongoDBRepository.DependencyInjection;
@@ -68,6 +72,18 @@ namespace HeroesWeb
             {
                 services.AddMongoDBRepository(Configuration);                
             }
+
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(
+                s.GetRequiredService));
+
+            services.AddScoped<HeroSchema>();
+            services.AddScoped<HeroMutation>();
+
+            services.AddGraphQL(o => { o.ExposeExceptions = true; })
+                .AddGraphTypes(ServiceLifetime.Scoped)
+                .AddUserContextBuilder(httpContext => httpContext.User)
+                .AddDataLoader();
+
 
             services.AddCors();
 
@@ -207,6 +223,9 @@ namespace HeroesWeb
             }
 
             app.UseSwagger();
+
+            app.UseGraphQL<HeroSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
             app.UseMvc(routes =>
             {

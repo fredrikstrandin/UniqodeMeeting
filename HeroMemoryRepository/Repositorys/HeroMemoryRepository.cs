@@ -42,6 +42,15 @@ namespace HeroesWeb.Repositorys
             return Task.FromResult<HeroItem>(hero);
         }
 
+        public Task<HeroItem> GetHeroEmpNoAsync(int empNo)
+        {
+            HeroItem hero = null;
+
+            hero = _memoryContext.Heroeslist.FirstOrDefault(x => x.EmpNo == empNo);
+
+            return Task.FromResult<HeroItem>(hero);
+        }
+
         public Task<HeroItem> CreateAsync(HeroItem item)
         {
             if (default(HeroItem) != item)

@@ -29,6 +29,10 @@ namespace HeroesWeb.Services
             return await _heroRepository.GetHeroAsync(id);
         }
 
+        public async Task<HeroItem> GetHeroEmpNoAsync(int empNo)
+        {
+            return await _heroRepository.GetHeroEmpNoAsync(empNo);
+        }
         public async Task<HeroItem> CreateAsync(HeroItem item)
         {
             HeroItem ret = await _heroRepository.CreateAsync(item);

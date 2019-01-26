@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using XUnitTestUniqodeMeeting.DataAttributes;
@@ -82,7 +83,7 @@ namespace XUnitTestUniqodeMeeting
             public async Task GetHeroes()
             {
                 HttpResponseMessage responseApi = await _apiClient.GetAsync("/api/Heroes");
-                
+
                 Assert.Equal(HttpStatusCode.OK, responseApi.StatusCode);
             }
 
@@ -90,7 +91,7 @@ namespace XUnitTestUniqodeMeeting
             [TestHeroes]
             public async Task PostHero(HeroItem item)
             {
-                var ApiResponse = await _apiClient.PostAsJsonAsync("/api/Heroes", 
+                var ApiResponse = await _apiClient.PostAsJsonAsync("/api/Heroes",
                     item);
 
                 ApiResponse.EnsureSuccessStatusCode();
@@ -119,6 +120,18 @@ namespace XUnitTestUniqodeMeeting
                 Assert.True(respons.Id == item.Id);
                 Assert.True(respons.Name == $"{item.Name} [updatede]");
             }
+
+            [Fact]
+            public async Task GetGraphQLHeroes()
+            {
+                var post = new { query = "{  hero(empno: 1) { empNo   city  }}"};
+
+                HttpResponseMessage responseApi = await _apiClient.PostAsJsonAsync("/graphql", post);
+
+                string str = await responseApi.Content.ReadAsStringAsync();
+                Assert.Equal(HttpStatusCode.OK, responseApi.StatusCode);
+            }
+
         }
     }
 }

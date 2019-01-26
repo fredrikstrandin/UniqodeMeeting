@@ -49,6 +49,13 @@ namespace HeroesWeb.Repositorys
                 .FirstOrDefaultAsync(); 
         }
 
+        public async Task<HeroItem> GetHeroEmpNoAsync(int empNo)
+        {
+            return await _context.HeroesEntityCollection
+                .Find(x => x.EmpNo == empNo)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<HeroItem> CreateAsync(HeroItem item)
         {
             HeroesEntity entity = item;

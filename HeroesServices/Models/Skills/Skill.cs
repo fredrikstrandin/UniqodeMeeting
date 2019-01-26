@@ -8,5 +8,6 @@ namespace HeroesServices.Models.Skills
     {
         public string Name { get; set; }
         public Dictionary<string, string> Skills { get; set; }
+
     }
 }
