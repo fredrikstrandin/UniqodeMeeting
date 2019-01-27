@@ -73,17 +73,7 @@ namespace HeroesWeb
                 services.AddMongoDBRepository(Configuration);                
             }
 
-            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(
-                s.GetRequiredService));
-
-            services.AddScoped<HeroSchema>();
-            services.AddScoped<HeroMutation>();
-
-            services.AddGraphQL(o => { o.ExposeExceptions = true; })
-                .AddGraphTypes(ServiceLifetime.Scoped)
-                .AddUserContextBuilder(httpContext => httpContext.User)
-                .AddDataLoader();
-
+            services.AddGraphQL();
 
             services.AddCors();
 

@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿
+using GraphQL.Types;
 using HeroesWeb.GraphQL.Types;
 using HeroesWeb.Models;
 using HeroesWeb.Services;

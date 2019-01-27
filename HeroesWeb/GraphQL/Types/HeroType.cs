@@ -17,11 +17,9 @@ namespace HeroesWeb.GraphQL.Types
             Field(t => t.Name);
             Field(t => t.City);
             Field<ListGraphType<SkillType>>(
-            "skills",
-            resolve: context =>
-            {
-                return context.Source.Skills;
-            });
+                "skills",
+                resolve: context => context.Source.Skills 
+            );
         }
     }
 }

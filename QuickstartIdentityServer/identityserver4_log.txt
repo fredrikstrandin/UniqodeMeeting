@@ -9491,3 +9491,10 @@ System.IO.IOException: Authentication failed because the remote party has closed
 2019-01-26 13:26:54.176 +01:00 [DBG] Consent Return Url Parameter: returnUrl
 2019-01-26 13:26:54.177 +01:00 [DBG] Error Url: /home/error
 2019-01-26 13:26:54.177 +01:00 [DBG] Error Id Parameter: errorId
+2019-01-26 20:54:46.121 +01:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2019-01-26 20:54:46.193 +01:00 [INF] Using the default authentication scheme idsrv for IdentityServer
+2019-01-26 20:54:46.199 +01:00 [DBG] Using idsrv as default ASP.NET Core scheme for authentication
+2019-01-26 20:54:46.200 +01:00 [DBG] Using idsrv as default ASP.NET Core scheme for sign-in
+2019-01-26 20:54:46.200 +01:00 [DBG] Using idsrv as default ASP.NET Core scheme for sign-out
+2019-01-26 20:54:46.201 +01:00 [DBG] Using idsrv as default ASP.NET Core scheme for challenge
+2019-01-26 20:54:46.201 +01:00 [DBG] Using idsrv as default ASP.NET Core scheme for forbid
